@@ -15,7 +15,7 @@ Role Variables
 
 `arduino_platform_watch_path`: Path to be watched for created/changed "platform.txt" files
 
-`arduino_platform_playbook`: Playbook-Path to be executed at file change
+`arduino_platform_playbook_path`: Playbook-Path to be executed at file change
 
 Dependencies
 ------------
@@ -30,8 +30,16 @@ Example Playbook
   gather_facts: true
   roles:
     - role: arduino_platform_watcher
+```
+
+### Change Playbook Path
+```
+- hosts: localhost
+  gather_facts: true
+  roles:
+    - role: arduino_platform_watcher
       vars:
-        arduino_platform_playbook: "{{ ansible_user_dir }}/ansible/arduino.yaml"
+        arduino_platform_playbook_path: "{{ playbook_dir }}/arduino-patch-platform-playbook.yml"
 ```
 
 Local Testing

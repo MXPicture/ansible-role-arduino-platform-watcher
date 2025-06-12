@@ -4,4 +4,4 @@
   roles:
     - role: arduino_platform_watcher
       vars:
-        arduino_platform_playbook: "{{ ansible_user_dir }}/ansible/arduino.yaml"
+        arduino_platform_playbook_path: "{{ playbook_dir }}/arduino-patch-platform-playbook.yml"

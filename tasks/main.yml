@@ -1,4 +1,11 @@
 ---
+
+- name: Create Directory
+  ansible.builtin.file:
+    path: "{{ arduino_platform_script_dir }}"
+    state: directory
+    mode: '0755'
+
 - name: Create platform watcher script
   template:
     src: arduino-platform-watcher.sh.j2
