@@ -2,6 +2,11 @@
 - name: Run Present
   when: arduino_watcher_state == 'present'
   block:
+    - name: Ensure fswatch is installed
+      community.general.homebrew:
+        name: fswatch
+        state: present
+
     - name: Create Directory
       ansible.builtin.file:
         path: "{{ arduino_platform_script_dir }}"
