@@ -17,10 +17,13 @@ Role Variables
 
 `arduino_platform_playbook_path`: Playbook-Path to be executed at file change
 
+`arduino_watcher_state`: present or absent (default: `present`)
+
 Dependencies
 ------------
 
 Arduino. At least the directory must exist.
+
 
 Example Playbook
 ----------------
@@ -37,9 +40,29 @@ Example Playbook
 - hosts: localhost
   gather_facts: true
   roles:
-    - role: arduino_platform_watcher
+    - role: role: MXPicture.arduino-platform-watcher
       vars:
         arduino_platform_playbook_path: "{{ playbook_dir }}/arduino-patch-platform-playbook.yml"
+```
+
+### Present State (default)
+```
+- hosts: localhost
+  gather_facts: true
+  roles:
+    - role: role: MXPicture.arduino-platform-watcher
+      vars:
+        arduino_watcher_state: present
+```
+
+### Absent State
+```
+- hosts: localhost
+  gather_facts: true
+  roles:
+    - role: role: MXPicture.arduino-platform-watcher
+      vars:
+        arduino_watcher_state: absent
 ```
 
 Local Testing

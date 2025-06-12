@@ -1,29 +1,52 @@
 ---
-- name: Create Directory
-  ansible.builtin.file:
-    path: "{{ arduino_platform_script_dir }}"
-    state: directory
-    mode: "0755"
+- name: Run Present
+  when: arduino_watcher_state == 'present'
+  block:
+    - name: Create Directory
+      ansible.builtin.file:
+        path: "{{ arduino_platform_script_dir }}"
+        state: directory
+        mode: "0755"
 
-- name: Create platform watcher script
-  ansible.builtin.template:
-    src: arduino-platform-watcher.sh.j2
-    dest: "{{ arduino_platform_script_dir }}/arduino-platform-watcher.sh"
-    mode: "0755"
-    owner: "{{ ansible_user }}"
-    group: staff
+    - name: Create platform watcher script
+      ansible.builtin.template:
+        src: arduino-platform-watcher.sh.j2
+        dest: "{{ arduino_platform_script_dir }}/arduino-platform-watcher.sh"
+        mode: "0755"
+        owner: "{{ ansible_user }}"
+        group: staff
 
-- name: Create LaunchAgent plist (macOS only)
-  ansible.builtin.template:
-    src: com.arduino.platformwatcher.plist.j2
-    dest: "{{ ansible_user_dir }}/Library/LaunchAgents/com.arduino.platformwatcher.plist"
-    mode: "0644"
-    owner: "{{ ansible_user }}"
-    group: staff
-  when: ansible_facts['os_family'] == 'Darwin'
+    - name: Create LaunchAgent plist (macOS only)
+      ansible.builtin.template:
+        src: com.arduino.platformwatcher.plist.j2
+        dest: "{{ ansible_user_dir }}/Library/LaunchAgents/com.arduino.platformwatcher.plist"
+        mode: "0644"
+        owner: "{{ ansible_user }}"
+        group: staff
+      when: ansible_facts['os_family'] == 'Darwin'
 
-- name: Load LaunchAgent (macOS only)
-  ansible.builtin.command: launchctl load -w "{{ ansible_user_dir }}/Library/LaunchAgents/com.arduino.platformwatcher.plist"
-  become: false
-  changed_when: false
-  when: ansible_facts['os_family'] == 'Darwin'
+    - name: Load LaunchAgent (macOS only)
+      ansible.builtin.command: launchctl load -w "{{ ansible_user_dir }}/Library/LaunchAgents/com.arduino.platformwatcher.plist"
+      become: false
+      changed_when: false
+      when: ansible_facts['os_family'] == 'Darwin'
+
+- name: Run Absent
+  when: arduino_watcher_state == 'absent'
+  block:
+    - name: Unload LaunchAgent (macOS only)
+      ansible.builtin.command: launchctl unload -w "{{ ansible_user_dir }}/Library/LaunchAgents/com.arduino.platformwatcher.plist"
+      become: false
+      changed_when: false
+      when: ansible_facts['os_family'] == 'Darwin'
+
+    - name: Delete LaunchAgent plist (macOS only)
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/Library/LaunchAgents/com.arduino.platformwatcher.plist"
+        state: absent
+      when: ansible_facts['os_family'] == 'Darwin'
+
+    - name: Remove platform watcher script
+      ansible.builtin.file:
+        path: "{{ arduino_platform_script_dir }}/arduino-platform-watcher.sh"
+        state: absent

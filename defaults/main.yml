@@ -7,3 +7,4 @@ arduino_platform_watch_path: >-
     {{ ansible_user_dir }}/.arduino15/packages
   {% endif %}
 arduino_platform_playbook_path: "{{ playbook_dir }}/arduino-patch-platform-playbook.yml"
+arduino_watcher_state: "present"
