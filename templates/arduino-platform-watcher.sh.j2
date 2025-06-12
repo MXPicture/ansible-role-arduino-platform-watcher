@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/bin/zsh
 
 WATCH_DIR="{{ arduino_platform_watch_path }}"
 
-fswatch -0 -r --event=Updated --event=Created --event=Removed "$WATCH_DIR" | \
+/opt/homebrew/bin/fswatch -0 -r --event=Updated --event=Created --event=Removed "$WATCH_DIR" | \
 while IFS= read -r -d '' changed_file; do
     if [[ "$(basename "$changed_file")" == "platform.txt" ]]; then
         echo "$(date): Change detected in $changed_file" >> "{{ arduino_platform_script_dir }}/platform-watcher.log"
-        ansible-playbook "{{ arduino_platform_playbook_path }}" >> "{{ arduino_platform_script_dir }}/platform-watcher.log" 2>&1
+        {{ ansible_user_dir }}/.local/bin/ansible-playbook/ansible-playbook "{{ arduino_platform_playbook_path }}" >> "{{ arduino_platform_script_dir }}/platform-watcher.log" 2>&1
 
     fi
 done
