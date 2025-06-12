@@ -29,7 +29,7 @@ Example Playbook
 - hosts: localhost
   gather_facts: true
   roles:
-    - role: arduino_platform_watcher
+    - role: MXPicture.arduino-platform-watcher
 ```
 
 ### Change Playbook Path

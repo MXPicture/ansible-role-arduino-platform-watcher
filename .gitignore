@@ -10,3 +10,10 @@
 
 # Optional: ignore backups created by Ansible's copy module
 *.bak
+
+config/config.yml
+config/*_config_path.yml
+inventory
+roles/geerlingguy.*
+roles/professormanhattan.*
+tmp/**

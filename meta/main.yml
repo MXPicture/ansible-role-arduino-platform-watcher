@@ -1,10 +1,10 @@
 ---
 galaxy_info:
-  role_name: arduino-platform-watcher
-  namespace: MXPicture
+  role_name: arduino_platform_watcher
+  namespace: mxpicture
   author: Tobias Bildner
-  description: "Configures a script watching platform.txt files, triggering Asible Role - Arduino Patch Platform and using Launch Agent for executing the script at user login"
-  
+  description: "Configures a script watching platform.txt files, triggering Arduino Patch Platform and using Launch Agent for executing it at user login"
+
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   # issue_tracker_url: http://example.com/issue/tracker
@@ -16,9 +16,9 @@ galaxy_info:
   # - GPL-3.0-only
   # - Apache-2.0
   # - CC-BY-4.0
-  license: license (GPL-2.0-or-later, MIT, etc)
+  license: MIT
 
-  min_ansible_version: 2.9
+  min_ansible_version: "2.18"
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:
@@ -41,7 +41,8 @@ galaxy_info:
   #   - 7
   #   - 99.99
 
-  galaxy_tags: []
+  galaxy_tags:
+    []
     # List tags for your role here, one per line. A tag is a keyword that describes
     # and categorizes the role. Users find roles by searching for tags. Be sure to
     # remove the '[]' above, if you add tags to this list.
@@ -49,6 +50,7 @@ galaxy_info:
     # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
     #       Maximum 20 tags per role.
 
-dependencies: []
+dependencies:
+  []
   # List your role dependencies here, one per line. Be sure to remove the '[]' above,
   # if you add dependencies to this list.
