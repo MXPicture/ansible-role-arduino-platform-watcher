@@ -1,0 +1,22 @@
+---
+- name: Create platform watcher script
+  template:
+    src: arduino-platform-watcher.sh.j2
+    dest: "{{ arduino_platform_script_dir }}/arduino-platform-watcher.sh"
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: staff
+
+- name: Create LaunchAgent plist (macOS only)
+  template:
+    src: com.arduino.platformwatcher.plist.j2
+    dest: "{{ ansible_user_dir }}/Library/LaunchAgents/com.arduino.platformwatcher.plist"
+    mode: '0644'
+    owner: "{{ ansible_user }}"
+    group: staff
+  when: ansible_facts['os_family'] == 'Darwin'
+
+- name: Load LaunchAgent (macOS only)
+  shell: launchctl load -w "{{ ansible_user_dir }}/Library/LaunchAgents/com.arduino.platformwatcher.plist"
+  become: false
+  when: ansible_facts['os_family'] == 'Darwin'

@@ -1,0 +1,12 @@
+# Ansible artifacts
+*.retry
+
+# OS and editor files
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Optional: ignore backups created by Ansible's copy module
+*.bak
