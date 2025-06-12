@@ -1,10 +1,11 @@
 ---
 arduino_platform_script_dir: "{{ playbook_dir }}/dist"
 arduino_platform_watch_path: >-
-  {% if ansible_facts['os_family'] == 'Darwin' %}
-    {{ ansible_user_dir }}/Library/Arduino15/packages
-  {% else %}
-    {{ ansible_user_dir }}/.arduino15/packages
-  {% endif %}
+  {{
+    (ansible_user_dir ~
+      ('/Library/Arduino15/packages' if ansible_facts['os_family'] == 'Darwin'
+       else '/.arduino15/packages')
+    ).strip()
+  }}
 arduino_platform_playbook_path: "{{ playbook_dir }}/arduino-patch-platform-playbook.yml"
 arduino_watcher_state: "present"
