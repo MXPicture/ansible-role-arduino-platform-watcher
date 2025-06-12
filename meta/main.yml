@@ -1,7 +1,7 @@
 ---
 galaxy_info:
-  role_name: arduino_platform_watcher
-  namespace: mxpicture
+  role_name: arduino-platform-watcher
+  namespace: MXPicture
   author: Tobias Bildner
   description: "Configures a script watching platform.txt files, triggering Arduino Patch Platform and using Launch Agent for executing it at user login"
 
